@@ -136,14 +136,10 @@ app.post("/", async (req: Request, res: Response) => {
         return includesText(arrayOfAddresses, value);
       });
 
-      const followersArray: any[] = [];
-      shopMatchByAddress.map((item) => {
-        item.followers.map((eachItem: any) => {
-          usersData.filter((elem: any) => {
-            if (eachItem === elem.id) {
-              followersArray.push(elem);
-            }
-          });
+      const followersArray: number[] = [];
+      shopMatchByAddress.forEach((item) => {
+        item.followers.forEach((followerId: number) => {
+          followersArray.push(followerId);
         });
       });
 

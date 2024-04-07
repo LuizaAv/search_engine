@@ -115,7 +115,7 @@
                     button.style.margin = "10px";
                     button.style.height = "40px";
                     button.setAttribute("id", `${dataOfShops[i].userId}`)
-                    buttonFollowers.setAttribute("id", `${dataOfShops[i].userId}`)
+                    buttonFollowers.setAttribute("id", `${dataOfShops[i].shopId}`)
 
                     newContainer.appendChild(lineName)
                     newContainer.appendChild(lineAddress)
@@ -172,7 +172,9 @@
                         }
                     })
 
-                    buttonFollowers.addEventListener("click", function(){
+                    buttonFollowers.addEventListener("click", function(e){
+                        console.log(e.target.id)
+                        console.log(dataOfShops)
                         if(!flagFollowers){
                             let lineFollowers = document.createElement("h5");
                             lineFollowers.setAttribute("id", "follower")
@@ -183,14 +185,16 @@
                             let followersContainerDiv = document.createElement("div");
                             followersContainerDiv.setAttribute("id", "followersContainerDiv")
 
-
-                            for(let i = 0; i < followersOfShop.length; ++i){
-                                console.log(e.target.id)
-                                if(`followers-${followersOfShop[i].id}` === `followers-${e.target.id}`){
-                                    let line = document.createElement("p")
-                                    line.style.marginLeft = "20px"
-                                    line.innerHTML = `${followersOfShop[i].name} ${followersOfShop[i].surename}`
-                                    followersContainerDiv.appendChild(line)
+                            console.log(owners)
+                            for(let i = 0; i < dataOfShops[+e.target.id].followers.length; ++i){
+                                for(let j = 0; j < owners.length; ++j){
+                                  
+                                    if(owners[j].id === +dataOfShops[+e.target.id].followers[i]){
+                                        let line = document.createElement("p")
+                                        line.style.marginLeft = "20px"
+                                        line.innerHTML = `${owners[j].name} ${owners[j].surename}`
+                                        followersContainerDiv.appendChild(line)
+                                    }
                                 }
                             }
 
