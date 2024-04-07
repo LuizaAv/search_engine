@@ -1,0 +1,311 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div class = "container" id="data">
+       <div>
+            <input placeholder="type anything" id = "input" />
+            <button id="button">Search</button>
+       </div>
+       <div id = "users"></div>
+       <div id = "friends"></div>
+    </div>
+    <script>
+        let data = []
+        let button = document.getElementById("button")
+        let input = document.getElementById("input")
+
+        let url = "http://localhost:3010/"
+
+        button.addEventListener("click", postInfo)
+        input.addEventListener("keypress", function (e)  {
+            if (e.key === 'Enter') {
+                postInfo(e);
+            }
+        })
+
+        async function postInfo(e){
+            e.preventDefault()
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify({
+                    value: input.value
+                })
+            })
+
+
+            let res = await response.json()
+            let data = res.users
+            let car = res.car
+            let dataOfShops = res.shops
+
+            let owners = res.owners
+            let followersOfShop = res.follower
+
+            let shopAddressMatch = res.shopAddressMatch
+            let usersByAddress = res.usersByAddress
+            let followersByAddress = res.followersByAddress
+            let usersList = res.usersList
+            let selectFriends = res.usersData
+            
+
+
+            let usersDiv = document.getElementById("users");
+            
+            if(data){
+                if(res.users.length > 0){
+                    for (let i = 0; i < data.length; ++i) {
+                    let lineName = document.createElement("p");
+                    let lineCar = document.createElement("p");
+                    let newContainer = document.createElement("div")
+
+                    newContainer.style.border = "1px solid yellow"
+                    newContainer.style.borderRadius = "10px"
+                    newContainer.style.width = "500px"
+                    newContainer.style.paddingLeft = "15px"
+                    newContainer.style.margin = "10px"
+
+                    lineName.innerHTML = `${data[i].name} ${data[i].surename}`
+                    lineCar.innerHTML = car ? `Owner of: ${car}` : null
+
+                    newContainer.appendChild(lineName);
+                    newContainer.appendChild(lineCar)
+                    usersDiv.appendChild(newContainer)
+                }}else{
+                    let line = document.createElement("h4");
+                    line.innerHTML = `There isn't a user who has this kind of machine :)`
+                    usersDiv.appendChild(line)
+                }
+            }else if(dataOfShops || shopAddressMatch){
+                if(dataOfShops === undefined){
+                    dataOfShops = shopAddressMatch
+                    owners = usersByAddress
+                    followersOfShop = followersByAddress
+                }
+                for (let i = 0; i < dataOfShops.length; ++i) {
+                    let flagOwners = false
+                    let flagFollowers = false
+
+                    let lineName = document.createElement("p");
+                    let lineAddress = document.createElement("p");
+                    let buttonsContainer = document.createElement("div")
+                    let newContainer = document.createElement("div")
+
+                    let button = document.createElement("button")
+                    let buttonFollowers = document.createElement("button")
+                    
+                    lineName.innerHTML = `"${dataOfShops[i].name}" shop`;
+                    lineAddress.innerHTML = `Address: ${dataOfShops[i].address}`;
+                    button.innerHTML = `Show owners`
+                    buttonFollowers.innerHTML = `Show followers`
+
+                    buttonsContainer.style.display = "flex"
+                    buttonsContainer.style.alignItems = "center"
+                    buttonsContainer.style.justifyContent = "space-between"
+                    buttonFollowers.style.margin = "10px";
+                    buttonFollowers.style.height = "40px"
+                    button.style.margin = "10px";
+                    button.style.height = "40px";
+                    button.setAttribute("id", `${dataOfShops[i].userId}`)
+                    buttonFollowers.setAttribute("id", `${dataOfShops[i].userId}`)
+
+                    newContainer.appendChild(lineName)
+                    newContainer.appendChild(lineAddress)
+
+                    let postHeader = document.createElement("h4");
+                    postHeader.innerHTML = "Posts"
+                    newContainer.appendChild(postHeader)
+
+                    for(let j = 0; j < dataOfShops[i].posts.length; ++j){
+                        let postElem = document.createElement("p")
+                        postElem.innerHTML = `"${dataOfShops[i].posts[j]}"`
+                        postElem.style.marginLeft = "20px"
+                        newContainer.appendChild(postElem)
+                    }
+
+                    buttonsContainer.appendChild(button)
+                    buttonsContainer.appendChild(buttonFollowers)
+                    newContainer.appendChild(buttonsContainer)
+
+                    button.addEventListener("click", function(e){
+                        if(!flagOwners){
+                            let lineOwner = document.createElement("h5");
+                            lineOwner.setAttribute("id", "owner")
+                            lineOwner.innerHTML = `${owners.length > 1 ? "Owners:" : "Owner:"}`
+
+                            newContainer.appendChild(lineOwner)
+
+                            let ownersContainerDiv = document.createElement("div");
+                            ownersContainerDiv.setAttribute("id", "ownersContainerDiv")
+                            
+                            for(let i = 0; i < owners.length; ++i){
+                                if(owners[i].id === +e.target.id){
+                                    let line = document.createElement("p")
+                                    line.style.marginLeft = "20px"
+                                    line.innerHTML = `${owners[i].name} ${owners[i].surename}`
+                                    ownersContainerDiv.appendChild(line)
+                                }
+                            }
+
+                            newContainer.appendChild(ownersContainerDiv)
+
+                            button.innerHTML = `Hide owners`
+
+                            flagOwners = true
+                        }else{
+                            let ownersContainerDiv = document.getElementById("ownersContainerDiv")
+                            let owner = document.getElementById("owner")
+                            newContainer.removeChild(ownersContainerDiv)
+                            newContainer.removeChild(owner)
+
+                            button.innerHTML = `Show owners`
+
+                            flagOwners = false
+                        }
+                    })
+
+                    buttonFollowers.addEventListener("click", function(){
+                        if(!flagFollowers){
+                            let lineFollowers = document.createElement("h5");
+                            lineFollowers.setAttribute("id", "follower")
+                            lineFollowers.innerHTML = `Followers`
+
+                            newContainer.appendChild(lineFollowers)
+
+                            let followersContainerDiv = document.createElement("div");
+                            followersContainerDiv.setAttribute("id", "followersContainerDiv")
+
+
+                            for(let i = 0; i < followersOfShop.length; ++i){
+                                console.log(e.target.id)
+                                if(`followers-${followersOfShop[i].id}` === `followers-${e.target.id}`){
+                                    let line = document.createElement("p")
+                                    line.style.marginLeft = "20px"
+                                    line.innerHTML = `${followersOfShop[i].name} ${followersOfShop[i].surename}`
+                                    followersContainerDiv.appendChild(line)
+                                }
+                            }
+
+                            newContainer.appendChild(followersContainerDiv)
+                            
+                            flagFollowers = true
+
+                            buttonFollowers.innerHTML = `Hide followers`
+                        }else{
+                            let followersContainerDiv = document.getElementById("followersContainerDiv")
+                            let follower = document.getElementById("follower")
+                            newContainer.removeChild(followersContainerDiv)
+                            newContainer.removeChild(follower)
+
+                            buttonFollowers.innerHTML = `Show followers`
+
+                            flagFollowers = false
+                        }
+                    })
+
+                    newContainer.style.border = "1px solid yellow"
+                    newContainer.style.borderRadius = "10px"
+                    newContainer.style.width = "250px"
+                    newContainer.style.paddingLeft = "15px"
+                    newContainer.style.margin = "10px"
+                    newContainer.style.marginLeft = "0px"
+
+                    usersDiv.appendChild(newContainer);
+                }
+            }else if(usersList){
+              console.log("userlist")
+                for(let i = 0; i < usersList.length; ++i){
+                    let lineName = document.createElement("p");
+                    lineName.innerHTML = (usersList[i].name && usersList[i].surename) ? `${usersList[i].name} ${usersList[i].surename}` : `User not found`
+                    
+                    let newContainer = document.createElement("div")
+                    let header = document.createElement("h3")
+                    let button = document.createElement("button")
+
+                    newContainer.setAttribute("id", `${i}`)
+
+                    header.innerHTML = `Posts`
+                    button.innerHTML = `Show friends of ${usersList[i].name}`
+
+                    newContainer.setAttribute("id", `user-${usersList[i].id}`);
+                    button.setAttribute("data-user-id", usersList[i].id);
+
+                    newContainer.style.border = "1px solid yellow"
+                    newContainer.style.borderRadius = "10px"
+                    newContainer.style.width = "250px"
+                    newContainer.style.paddingLeft = "15px"
+                    newContainer.style.margin = "10px"
+                    newContainer.style.marginLeft = "0px"
+
+                    newContainer.appendChild(lineName)
+                    newContainer.appendChild(header)
+                    
+                    for(let j = 0; j < usersList[i].posts.length; ++j){
+                        let linePost = document.createElement("p");
+
+                        linePost.innerHTML = `Post N${j + 1}: ${usersList[i].posts[j]}`
+                        newContainer.appendChild(linePost)
+                    }
+
+                    button.style.height = "50px";
+                    button.style.width = "150px";
+                    button.style.marginBottom = "10px";
+                    button.style.padding = "10px";
+                    button.style.fontWeight = "700";
+                
+                    newContainer.appendChild(button)
+                    usersDiv.appendChild(newContainer);
+                    
+                    let usersFriends = []
+                    let friendsContainerDiv = document.getElementById("friends")
+                    
+
+                    button.addEventListener("click", function(e){
+                        const userId = this.getAttribute("data-user-id"); 
+                        const clickedUser = usersList.find(user => user.id === +userId); 
+                        
+                        let friends 
+                        if (selectFriends[userId]) {
+                            friends = selectFriends.filter(friend => clickedUser.friends.includes(friend.id));
+                        }
+
+                        let friendsElem = document.createElement("div")
+
+                        console.log(friends)
+                        for(let i = 0; i < friends.length; ++i){
+                            let elem = document.createElement("p")
+                            elem.innerHTML = `${friends[i].name} ${friends[i].surename}`
+                            friendsElem.appendChild(elem)
+                        }
+
+
+                        friendsElem.style.borderRadius = "10px"
+                        friendsElem.style.width = "500px"
+                        friendsElem.style.paddingLeft = "15px"
+                        friendsElem.style.margin = "10px"
+                        friendsElem.style.marginLeft = "100px"
+                        friendsElem.style.border = "2px solid yellow"
+
+                        friendsContainerDiv.appendChild(friendsElem)
+                    })
+                }
+            }
+
+            if(usersDiv.childNodes.length === 0) {
+                let line = document.createElement("h3");
+                line.innerHTML = "There isn't a matching object";
+                usersDiv.appendChild(line);
+            }
+        }
+    </script>
+</body>
+</html>
+

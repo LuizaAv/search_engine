@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Stradivarius",
+        "shopId": 0,
+        "userId": 1,
+        "address": "Yerevan mall",
+        "posts": ["Greatings", "Gretings from Stradivarius team"],
+        "followers": [1,2,3]
+    },
+    {
+        "name": "Mango",
+        "shopId": 1,
+        "userId": 0,
+        "address": "Yerevan mall",
+        "posts": ["Good day to our followers", "Greatings from Mango team"],
+        "followers": [4,3]
+    },
+    {
+        "name": "Blossom",
+        "shopId": 2,
+        "userId": 3,
+        "address": "Erebuni mall",
+        "posts": ["Good morning", "Greatings from Blossom team"],
+        "followers": [1,2,3]
+    },
+    {
+        "name": "Levis",
+        "shopId": 3,
+        "userId": 2,
+        "address": "Dalma Garden Mall",
+        "posts": ["Fine day everyone", "Greatings from Levis team"],
+        "followers": [2,3]
+    },
+    {
+        "name": "Charles & Keith",
+        "shopId": 4,
+        "userId": 4,
+        "address": "Yerevan mall",
+        "posts": ["Greatings from Charles & Keith team", "Good evening to all of you"],
+        "followers": [1,3]
+    },
+    {
+        "name": "Parfois",
+        "shopId": 5,
+        "userId": 5,
+        "address": "Abovyan 35",
+        "posts": ["Greatings from Parfois team", "Good evening"],
+        "followers": [1,3]
+    },
+    {
+        "name": "Nike",
+        "shopId": 6,
+        "userId": 6,
+        "address": "Dalma Garden Mall",
+        "posts": ["Greatings from Nike team", "Good evening"],
+        "followers": [1,3]
+    }
+]

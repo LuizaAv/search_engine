@@ -1,0 +1,28 @@
+body{
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.container{
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+input{
+    outline: none;
+    border: 2px solid yellow;
+    height: 52px;
+    width: 600px;
+    border-radius: 15px;
+    padding-left: 30px;
+}
+
+button{
+    height: 54px;
+    width: 105px;
+    background-color: yellow;
+    border: 2px solid yellow;
+    outline: none;
+    border-radius: 15px;
+}

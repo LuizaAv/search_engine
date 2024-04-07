@@ -1,0 +1,79 @@
+[
+    {
+        "id": 0,
+        "name": "Emma",
+        "surename": "Voskanyan",
+        "age": 52,
+        "email": "emma.voskanyan@gmail.com",
+        "carId": 1,
+        "shopId": 1,
+        "posts": ["Hey", "Something"],
+        "friends": [2,3]
+    },
+    {
+        "id": 1,
+        "name": "Meri",
+        "surename": "Avetisyan",
+        "age": 29,
+        "email": "m.avet7777@gmail.com",
+        "carId": 2,
+        "shopId": 0,
+        "posts": ["Hey", "Greatings"],
+        "friends": [3,0]
+    },
+    {
+        "id": 2,
+        "name": "Sona",
+        "surename": "Gasparyan",
+        "age": 25,
+        "email": "sona.gasparyan@gmail.com",
+        "carId": 3,
+        "shopId": 3,
+        "posts": ["Good day", "Something"],
+        "friends": [1,3]
+    },
+    {
+        "id": 3,
+        "name": "Luiza",
+        "surename": "Avetisyan",
+        "age": 31,
+        "email": "l.avetisyan7777@gmail.com",
+        "carId": 34,
+        "shopId": 2     ,
+        "posts": ["Hey", "Good evening"],
+        "friends": [0,2,1,4]
+    },
+    {
+        "id": 4,
+        "name": "Karen",
+        "surename": "Gasparyan",
+        "age": 50,
+        "email": "karen.gasparyan@gmail.com",
+        "carId": 5,
+        "shopId": 4,
+        "posts": ["Hey", "Something"],
+        "friends": [2,1]
+    },
+    {
+        "id": 5,
+        "name": "Lusine",
+        "surename": "Mnatsakanyan",
+        "age": 31,
+        "email": "lusine.mnatsakanyan@gmail.com",
+        "carId": 1,
+        "shopId": 5,
+        "posts": ["Hey", "Something"],
+        "friends": [2,1]
+    },
+    {
+        "id": 6,
+        "name": "Hovhannes",
+        "surename": "Mkrtchyan",
+        "age": 31,
+        "email": "hovhannes.mkrtchyan@gmail.com",
+        "carId": 1,
+        "shopId": 6,
+        "posts": ["Hey", "Something"],
+        "friends": [2,1]
+    }
+]
