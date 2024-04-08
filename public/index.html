@@ -224,39 +224,38 @@
 
                     usersDiv.appendChild(newContainer);
                 }
-            }else if(usersList){
-              console.log("userlist")
-                for(let i = 0; i < usersList.length; ++i){
+            }else if (usersList) {
+                for (let i = 0; i < usersList.length; ++i) {
                     let lineName = document.createElement("p");
-                    lineName.innerHTML = (usersList[i].name && usersList[i].surename) ? `${usersList[i].name} ${usersList[i].surename}` : `User not found`
-                    
-                    let newContainer = document.createElement("div")
-                    let header = document.createElement("h3")
-                    let button = document.createElement("button")
+                    lineName.innerHTML = usersList[i].name && usersList[i].surename ? `${usersList[i].name} ${usersList[i].surename}` : `User not found`;
 
-                    newContainer.setAttribute("id", `${i}`)
+                    let newContainer = document.createElement("div");
+                    let header = document.createElement("h3");
+                    let button = document.createElement("button");
 
-                    header.innerHTML = `Posts`
-                    button.innerHTML = `Show friends of ${usersList[i].name}`
+                    newContainer.setAttribute("id", `${i}`);
+
+                    header.innerHTML = `Posts`;
+                    button.innerHTML = `Show friends of ${usersList[i].name}`;
 
                     newContainer.setAttribute("id", `user-${usersList[i].id}`);
                     button.setAttribute("data-user-id", usersList[i].id);
 
-                    newContainer.style.border = "1px solid yellow"
-                    newContainer.style.borderRadius = "10px"
-                    newContainer.style.width = "250px"
-                    newContainer.style.paddingLeft = "15px"
-                    newContainer.style.margin = "10px"
-                    newContainer.style.marginLeft = "0px"
+                    newContainer.style.border = "1px solid yellow";
+                    newContainer.style.borderRadius = "10px";
+                    newContainer.style.width = "250px";
+                    newContainer.style.paddingLeft = "15px";
+                    newContainer.style.margin = "10px";
+                    newContainer.style.marginLeft = "0px";
 
-                    newContainer.appendChild(lineName)
-                    newContainer.appendChild(header)
-                    
-                    for(let j = 0; j < usersList[i].posts.length; ++j){
+                    newContainer.appendChild(lineName);
+                    newContainer.appendChild(header);
+
+                    for (let j = 0; j < usersList[i].posts.length; ++j) {
                         let linePost = document.createElement("p");
 
-                        linePost.innerHTML = `Post N${j + 1}: ${usersList[i].posts[j]}`
-                        newContainer.appendChild(linePost)
+                        linePost.innerHTML = `Post N${j + 1}: ${usersList[i].posts[j]}`;
+                        newContainer.appendChild(linePost);
                     }
 
                     button.style.height = "50px";
@@ -264,45 +263,36 @@
                     button.style.marginBottom = "10px";
                     button.style.padding = "10px";
                     button.style.fontWeight = "700";
-                
-                    newContainer.appendChild(button)
+
+                    newContainer.appendChild(button);
                     usersDiv.appendChild(newContainer);
-                    
-                    let usersFriends = []
-                    let friendsContainerDiv = document.getElementById("friends")
-                    
 
-                    button.addEventListener("click", function(e){
-                        const userId = this.getAttribute("data-user-id"); 
-                        const clickedUser = usersList.find(user => user.id === +userId); 
-                        
-                        let friends 
-                        if (selectFriends[userId]) {
-                            friends = selectFriends.filter(friend => clickedUser.friends.includes(friend.id));
+                    button.addEventListener("click", function (e) {
+                        const userId = this.getAttribute("data-user-id");
+                        const clickedUser = usersList.find((user) => user.id === +userId);
+                        const friendsContainerDiv = document.createElement("div");
+                        const friendsElem = document.createElement("div");
+
+                        friendsElem.style.borderRadius = "10px";
+                        friendsElem.style.width = "500px";
+                        friendsElem.style.paddingLeft = "15px";
+                        friendsElem.style.margin = "10px";
+                        friendsElem.style.marginLeft = "100px";
+
+                        for (let i = 0; i < clickedUser.friends.length; ++i) {
+                            const friend = selectFriends.find((friend) => friend.id === clickedUser.friends[i]);
+                            if (friend) {
+                                const elem = document.createElement("p");
+                                elem.innerHTML = `${friend.name} ${friend.surename}`;
+                                friendsElem.appendChild(elem);
+                            }
                         }
 
-                        let friendsElem = document.createElement("div")
-
-                        console.log(friends)
-                        for(let i = 0; i < friends.length; ++i){
-                            let elem = document.createElement("p")
-                            elem.innerHTML = `${friends[i].name} ${friends[i].surename}`
-                            friendsElem.appendChild(elem)
-                        }
-
-
-                        friendsElem.style.borderRadius = "10px"
-                        friendsElem.style.width = "500px"
-                        friendsElem.style.paddingLeft = "15px"
-                        friendsElem.style.margin = "10px"
-                        friendsElem.style.marginLeft = "100px"
-                        friendsElem.style.border = "2px solid yellow"
-
-                        friendsContainerDiv.appendChild(friendsElem)
-                    })
+                        friendsContainerDiv.appendChild(friendsElem);
+                        newContainer.appendChild(friendsContainerDiv);
+                    });
                 }
             }
-
             if(usersDiv.childNodes.length === 0) {
                 let line = document.createElement("h3");
                 line.innerHTML = "There isn't a matching object";
