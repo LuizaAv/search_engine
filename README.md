@@ -59,10 +59,9 @@
 
             shop addresses
 
-        "abovyan 45",
+        "abovyan 35",
         "yerevan mall",
         "erebuni mall",
-        "abovyan 35",
         "dalma garden mall"
     
             cars can be searched from this range
@@ -125,7 +124,7 @@
             "Lusine Mnatsakanyan"
             "Hovhannes Mkrtchyan"
         
-        
+
 
 
 4) Text search algorithm

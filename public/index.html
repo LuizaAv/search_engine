@@ -90,6 +90,17 @@
                     owners = usersByAddress
                     followersOfShop = followersByAddress
                 }
+
+
+                console.log(dataOfShops)
+                console.log(shopAddressMatch)
+
+                console.log(owners)
+                console.log(usersByAddress)
+
+                console.log(followersOfShop)
+                console.log(followersByAddress)
+
                 for (let i = 0; i < dataOfShops.length; ++i) {
                     let flagOwners = false
                     let flagFollowers = false
@@ -172,9 +183,8 @@
                         }
                     })
 
+
                     buttonFollowers.addEventListener("click", function(e){
-                        console.log(e.target.id)
-                        console.log(dataOfShops)
                         if(!flagFollowers){
                             let lineFollowers = document.createElement("h5");
                             lineFollowers.setAttribute("id", "follower")
@@ -185,11 +195,14 @@
                             let followersContainerDiv = document.createElement("div");
                             followersContainerDiv.setAttribute("id", "followersContainerDiv")
 
-                            console.log(owners)
+                            //console.log(followersByAddress)
+                            //console.log(dataOfShops)
                             for(let i = 0; i < dataOfShops[+e.target.id].followers.length; ++i){
                                 for(let j = 0; j < owners.length; ++j){
                                   
-                                    if(owners[j].id === +dataOfShops[+e.target.id].followers[i]){
+                                    if(owners[j].id === dataOfShops[+e.target.id].followers[i]){
+                                        // console.log(dataOfShops[+e.target.id].followers[i])
+                                        // console.log(owners[j].id)
                                         let line = document.createElement("p")
                                         line.style.marginLeft = "20px"
                                         line.innerHTML = `${owners[j].name} ${owners[j].surename}`
@@ -226,6 +239,7 @@
                 }
             }else if (usersList) {
                 for (let i = 0; i < usersList.length; ++i) {
+                    let flag = false
                     let lineName = document.createElement("p");
                     lineName.innerHTML = usersList[i].name && usersList[i].surename ? `${usersList[i].name} ${usersList[i].surename}` : `User not found`;
 
@@ -290,7 +304,7 @@
 
                         friendsContainerDiv.appendChild(friendsElem);
                         newContainer.appendChild(friendsContainerDiv);
-                    });
+                    }, {once: true});
                 }
             }
             if(usersDiv.childNodes.length === 0) {

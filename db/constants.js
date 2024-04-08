@@ -49,7 +49,6 @@ const shopNames = new Set([
 ])
 
 const addressesShops = new Set([
-    "abovyan 45",
     "yerevan mall",
     "erebuni mall",
     "abovyan 35",

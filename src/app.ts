@@ -35,9 +35,11 @@ function include(text: string, subtext: string): boolean {
       if (matchCount >= check) {
         return true;
       }
+
       if (subtextIndex === subtext.length) {
         return true;
       }
+      
     } else {
       subtextIndex = 0;
       matchCount = 0;
@@ -112,6 +114,7 @@ app.post("/", async (req: Request, res: Response) => {
           });
         });
       });
+
 
       res
         .status(200)
